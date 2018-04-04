@@ -93,6 +93,7 @@ def reportTask( request ):
     if request.method == 'POST':
 
         srvlog.debug( request.body )
+        print request.body
 
         taskReport = json.loads( request.body )
         queryResult = taskReport['result']

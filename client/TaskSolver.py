@@ -25,8 +25,7 @@ def progress(count, total, suffix=''):
 class TaskSolver(object):
     def __init__(self):
         self.tasks = []
-        self.server = "http://localhost:8000"
-        self.server = "http://140.113.194.94:8000"
+        self.server = "http://localhost:8888"
         self.getTaskUrl = "/api/getTask/"
         self.c = Connector()
         self.data = ""

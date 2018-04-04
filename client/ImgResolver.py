@@ -60,8 +60,7 @@ class ImgResolver(object):
         log.debug("Guess Ratio:{}/{}={}%".format(self.guess_hit+1, self.guess_total, \
                 ((self.guess_hit+1)*100/(self.guess_total))))
 
-        os.remove( self.tmp_file )
-
+        os.remove(self.tmp_file)
 
         return imgCode
 

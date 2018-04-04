@@ -273,6 +273,7 @@ def addTask( task ):
 
 def reportTask( taskReport , taxId = 0):
 
+
     task = taskReport['task']
     statistics = taskReport['result']
 

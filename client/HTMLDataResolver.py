@@ -3,6 +3,7 @@
 import httplib, urllib
 import os
 import time
+import traceback
 import re
 import logging as log
 import sys
@@ -14,7 +15,7 @@ sys.setdefaultencoding( "utf-8" )
 
 
 # DB Column names
-colNames =['id','date','com','stat','money','taxid','addr','note']
+colNames =['id','date','com','stat','money','taxid','addr']
 
 # A Chinese string for "Record Not Found"
 no_data_rec_str = '\xe6\x9f\xa5\xe7\x84\xa1\xe7\x99\xbc\xe7\xa5\xa8\xe9\x96\x8b\xe7\xab\x8b\xe8\xb3\x87\xe6\x96\x99'
@@ -60,21 +61,32 @@ class HTMLDataResolver(object):
 
     def findtheData(self,items):
         """ find the sequence of data """
+
+
         text = {}
         for i in range(0,items.length()):
-            if re.match("^[a-zA-Z]{2}\d{8}$", items[i].text()) is not None:
+
+            s_text = items[i].text().strip()
+            if re.match("^[a-zA-Z]{2}\d{8}$", s_text) is not None:
                 j = 0
                 for col in colNames:
                     try:
-                        field = self.parseUTF8(items[i+j].text())
+
+                        field = self.parseUTF8(items[i+j].text().strip())
+
+
                     except Exception as e:
+                        traceback.print_exc()
                         if text['com'] == no_data_rec_str:
                             log.debug("Record not found")
                             raise NoRecord
                         else:
                             raise NotCorrectFormat
+
+
                     text[col]=field
                     j += 1
+
                 return text
         log.debug("Not found the number in response HTML {}".format(items.html()))
         raise NotFoundResult
